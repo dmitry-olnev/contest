@@ -1,0 +1,16 @@
+-- Нахождение самого прибыльного фильма.
+SELECT
+	m.title AS movie_title,
+	SUM(t.price) AS total_revenue
+FROM 
+	public."Movies" m
+JOIN 
+	public."Showtimes" s ON m.movie_id = s.movie_id
+JOIN 
+	public."Bookings" b ON s.showtime_id = b.showtime_id
+JOIN 
+	public."Tickets" t ON b.booking_id = t.booking_id
+GROUP BY m.movie_id
+ORDER BY total_revenue DESC
+LIMIT 1;
+

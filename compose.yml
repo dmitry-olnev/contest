@@ -1,0 +1,58 @@
+services:
+
+  apline:
+    container_name: linux
+    build: ./docker/alpine/
+    volumes:
+      - ./docker/alpine/sum.sh:/sum.sh
+    # docker exec -it linux bash
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    ports:
+      - 81:80
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - php
+
+  postgres:
+    container_name: postgres_server
+    build: ./docker/postgres/
+    ports: 
+      - 5432:5432
+    volumes:
+      - ./docker/data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES="database,database2"
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:8.14
+    ports:
+      - 8090:8080
+    volumes:
+      - ./docker/pgadmin/servers.json:/pgadmin4/servers.json
+      - ./docker/pgadmin/pgpass:/pgadmin4/pgpass
+      # - ./docker/pgadmin/data:/var/lib/pgadmin/
+      - ./docker/pgadmin/data/storage:/var/lib/pgadmin/storage/
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=dmitry@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=8080
+    depends_on:
+      - postgres
+
+  php:
+    container_name: php-fpm
+    build: ./docker/php/
+    ports:
+      - 9000:9000
+    volumes:
+      - ./src:/var/www/html
+
+
