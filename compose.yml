@@ -1,12 +1,5 @@
 services:
 
-  apline:
-    container_name: linux
-    build: ./docker/alpine/
-    volumes:
-      - ./docker/alpine/sum.sh:/sum.sh
-    # docker exec -it linux bash
-
   nginx:
     container_name: nginx
     image: nginx
@@ -54,5 +47,4 @@ services:
       - 9000:9000
     volumes:
       - ./src:/var/www/html
-
-
+      # docker exec -it php-fpm bash
