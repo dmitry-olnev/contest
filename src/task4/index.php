@@ -6,14 +6,14 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $perPage;
 
 // Получение фильмов из базы данных
-$stmt = $pdo->prepare("SELECT * FROM \"Movies\" ORDER BY movie_id LIMIT :limit OFFSET :offset");
+$stmt = $pdo->prepare("SELECT * FROM \"movies\" ORDER BY id LIMIT :limit OFFSET :offset");
 $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->execute();
 $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Получение общего количества фильмов
-$totalStmt = $pdo->query("SELECT COUNT(*) FROM \"Movies\"");
+$totalStmt = $pdo->query("SELECT COUNT(*) FROM \"movies\"");
 $totalMovies = $totalStmt->fetchColumn();
 $totalPages = ceil($totalMovies / $perPage);
 ?>
@@ -40,7 +40,7 @@ $totalPages = ceil($totalMovies / $perPage);
         <tbody>
             <?php foreach ($movies as $movie): ?>
                 <tr>
-                    <td><?= htmlspecialchars($movie['movie_id']) ?></td>
+                    <td><?= htmlspecialchars($movie['id']) ?></td>
                     <td><?= htmlspecialchars($movie['title']) ?></td>
                     <td><?= htmlspecialchars($movie['genre']) ?></td>
                     <td><?= htmlspecialchars($movie['duration']) ?></td>

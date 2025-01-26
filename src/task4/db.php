@@ -1,7 +1,7 @@
 <?php
 
 $host = 'postgres_server';
-$dbname = 'database';
+$dbname = 'db1';
 $user = 'admin';
 $password = 'admin';
 

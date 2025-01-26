@@ -5,7 +5,7 @@ class Database {
     // Параметры подключения
     private string $host = "postgres_server";	// Имя хоста (контейнера)
     private string $port = '5432';				// Порт
-    private string $db_name = "database2";		// Имя базы данных
+    private string $db_name = "db2";		// Имя базы данных
     private string $username = "admin";			// Имя пользователя
     private string $password = "admin";			// Пароль
     public $conn;								// Объект соединения

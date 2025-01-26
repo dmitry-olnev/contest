@@ -5,7 +5,7 @@ require_once __DIR__ . '/../config/database.php';
 class News {
 
 	private $conn;
-	private $table = '"News"';
+	private $table = 'news';
 
 		// Свойства новости
 		public int $id;
